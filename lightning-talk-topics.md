@@ -1,45 +1,23 @@
 # Lightning Talk Topics
 
-In this document, you can find a list of possible topics for your lightning talk. You can choose any topic from the list or propose your own topic (make sure to get it approved by me first).
+This document provides a comprehensive list of potential topics for your lightning talk presentation. You may select any topic from the curated list below, or propose your own topic (please ensure you obtain approval from me beforehand). 
+
+To reserve your chosen topic, please enter your name and preferred date in [this table](https://htblaleonding-my.sharepoint.com/:x:/g/personal/r_stropek_htl-leonding_ac_at/Ecreb-wl1w9EpxPieXL9onsBIWl_USXv1LtV14uD3lRmjQ?e=NjSl13) (school account login required for access). Please note that the table contains important details and specific notes regarding each lightning talk topic.
 
 ## AI Coding Tools
 
-Introduce an AI coding tool to your classmates. Give a high-level overview of its features and include a live demo. In case of very large and powerful tools, focus on a specific feature that you find particularly useful. It is perfectly ok if you limit the presentation of features that are available for free or during a time-limited trial.
+Present an AI coding tool to your classmates by providing a comprehensive overview of its capabilities. Begin with a high-level summary of its key features, then select a specific functionality for a detailed description, and conclude with an engaging live demonstration. You are welcome to focus on features that are available at no cost or during free trial periods.
 
 * GitHub Copilot
 * Cursor
-* Kiro
 * Windsurf
 * Mistral Code
 * Google AI Studio
 * Kilo Code
-* Roo Code
-* Continue
-* JetBrains AI
 * Lovable
 * V0
-* Bolt
 * Replit
 * Claude Code
-* OpenAI Codex
-* Gemini CLI
-
-## AI Concepts
-
-Introduce a concept related to coding with AI. Explain the concept and include a live demo.
-
-* Reasoning
-* Result Streaming
-* Structured Output
-* Function Calling (without MCP)
-* Model Context Protocol (MCP)
-* Vibe Coding vs. Spec-Driven Development
-* Pricing models of popular AI coding tools
-* Code Interpreter
-* Prompt Engineering for coding
-* Fine Tuning (difficult)
-* Embeddings (difficult)
-* Retrieval Augmented Generation (difficult; make sure to coordinate with the _Embeddings_ lightning talk)
 
 ## AI Models for Coding
 
@@ -58,8 +36,7 @@ Introduce an AI model that is particularly useful for coding. Research its stren
 
 Introduce a tool that is relevant for coding with AI, but does not fit into the categories above. Explain its purpose and include a live demo.
 
+* Open WebUI
 * Ollama
-* vLLM
-* Litellm
 * Open Router
 * Google Colab

@@ -22,6 +22,19 @@ In additional to the practical coding exams, you can have an optional oral exam 
 
 Note that grades are **not** given purely on calculated percentages. The calculated grade is a basis that can be adjusted by your teacher based on other factors (e.g. special achievements, special circumstances). However, deviations from calculated grades will be reasoned.
 
+## Lightning Talks
+
+Each student **must** give one lightning talk during the school year. Lightning talks are short presentations (maximum 8 minutes, you **must not** exceed this time limit). You can choose a topic from [this list](./lightning-talk-topics.md) or propose your own topic (make sure to get it approved by me first).
+
+## Overall Grade
+
+The overall grade for the course is based on your exam grades. Generally, the grade is calculated as the average of all exam grades. However, there are special considerations:
+
+* If you demonstrate knowledge of a specific topic in a later exam that you failed in an earlier exam, the earlier exam has less weight in the overall grade.
+* If you miss an exam for a valid reason (e.g. illness), the missed exam will not be counted in the overall grade.
+* If you miss an exam on a topic for which we will not have another exam later in the year, you will have to demonstrate your knowledge of this topic in an oral exam.
+* If your overall grade is in the borderline between two grades (between .3 and .7), your teacher can adjust your overall grade based on factors like quality of your lightning talk, quality of GitHub repository for homeworks, participation in class, etc.
+
 ## Course Prerequisites
 
 For this course, your personal computer must meet the following requirements (latest stable versions):
@@ -31,7 +44,6 @@ For this course, your personal computer must meet the following requirements (la
 * [Visual Studio Code](https://code.visualstudio.com/)
 * [Node.js](https://nodejs.org/)
 * [Git](https://git-scm.com/)
-* [.NET 9 SDK](https://dotnet.microsoft.com/en-us/download/dotnet/9.0) (only for the C# part of the course if applicable)
 * Password manager like [KeePass](https://keepass.info/) or [Bitwarden](https://bitwarden.com/) to store passwords (optional but recommended)
 
 ## AI Coding Agents
