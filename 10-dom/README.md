@@ -77,14 +77,14 @@ When a web browser loads an HTML page, it creates a DOM tree. Each HTML element 
 
 ## Basic DOM Interaction with TypeScript
 
-### 1. Getting a Reference to a Button and Adding a Click Handler
+### Getting a Reference to a Button and Adding a Click Handler
 
 First, let's see how to find a button in the DOM and add a click event listener:
 
 ```typescript
 // HTML: <button id="myButton">Click me!</button>
 
-// Get a reference to the button element
+// Get a referenc e to the button element
 const button = document.getElementById('myButton') as HTMLButtonElement;
 
 // Add a click event listener
@@ -99,7 +99,7 @@ button.addEventListener('click', () => {
 - `addEventListener()` attaches a function that runs when the specified event occurs
 - The arrow function `() => { ... }` is the code that runs when clicked
 
-### 2. Click Counter - Changing DOM Content
+### Click Counter - Changing DOM Content
 
 Let's create a click counter that updates the page when clicked:
 
@@ -127,7 +127,7 @@ button.addEventListener('click', () => {
 - `textContent` property changes the text inside an element
 - Template strings (`${clickCount}`) let us insert variables into strings
 
-### 3. Changing Element Styles
+### Changing Element Styles
 
 You can also change how elements look:
 
@@ -145,7 +145,7 @@ changeColorButton.addEventListener('click', () => {
 });
 ```
 
-### 4. Creating New Elements Dynamically
+### Creating New Elements Dynamically
 
 Sometimes you want to add new elements to the page:
 
@@ -173,7 +173,7 @@ addItemButton.addEventListener('click', () => {
 - `document.createElement()` creates a new HTML element
 - `appendChild()` adds the new element as a child of the container
 
-### 5. Working with Input Fields
+### Working with Input Fields
 
 Let's see how to get text from input fields:
 
@@ -197,6 +197,53 @@ greetButton.addEventListener('click', () => {
     }
 });
 ```
+
+### Working with Comboboxes (Select Elements)
+
+Comboboxes allow users to choose from a predefined list of options:
+
+```typescript
+// HTML: 
+// <select id="colorSelect">
+//     <option value="">Choose a color...</option>
+//     <option value="red">Red</option>
+//     <option value="green">Green</option>
+//     <option value="blue">Blue</option>
+//     <option value="yellow">Yellow</option>
+// </select>
+// <button id="applyColorButton">Apply Color</button>
+// <div id="colorDisplay">Select a color to see it here!</div>
+
+const colorSelect = document.getElementById('colorSelect') as HTMLSelectElement;
+const applyColorButton = document.getElementById('applyColorButton') as HTMLButtonElement;
+const colorDisplay = document.getElementById('colorDisplay') as HTMLDivElement;
+
+applyColorButton.addEventListener('click', () => {
+    const selectedColor = colorSelect.value; // Get the selected value
+    
+    if (selectedColor) {
+        colorDisplay.style.backgroundColor = selectedColor;
+        colorDisplay.style.color = 'white';
+        colorDisplay.style.padding = '20px';
+        colorDisplay.textContent = `You selected: ${selectedColor}`;
+    } else {
+        colorDisplay.textContent = 'Please select a color first.';
+        colorDisplay.style.backgroundColor = 'transparent';
+        colorDisplay.style.color = 'black';
+    }
+});
+
+// You can also listen for changes immediately when user selects
+colorSelect.addEventListener('change', () => {
+    console.log(`User selected: ${colorSelect.value}`);
+});
+```
+
+**Explanation:**
+- `<select>` creates the dropdown/combobox
+- Each `<option>` represents a choice with a `value` attribute
+- `selectElement.value` gets the currently selected option's value
+- The 'change' event fires immediately when the user makes a selection
 
 ## Key DOM Methods and Properties
 
