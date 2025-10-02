@@ -3,10 +3,42 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Startercode</title>
+    <title>SVG Bar Diagram</title>
 </head>
 <body>
-    <h1 id="helloWorldHeader">Hello World</h1>
+    <h1>SVG Bar Diagram Generator</h1>
+    
+    <!-- SVG canvas with fixed size -->
+    <svg id="diagram" width="1200" height="600" style="border: 1px solid black;"></svg>
+    
+    <!-- Input fields for monthly values -->
+    <div>
+        <p>Enter values for each month (leave empty to skip):</p>
+        <label>Month 1: <input type="number" id="month1" /></label>
+        <label>Month 2: <input type="number" id="month2" /></label>
+        <label>Month 3: <input type="number" id="month3" /></label>
+        <label>Month 4: <input type="number" id="month4" /></label>
+        <label>Month 5: <input type="number" id="month5" /></label>
+        <label>Month 6: <input type="number" id="month6" /></label>
+        <label>Month 7: <input type="number" id="month7" /></label>
+        <label>Month 8: <input type="number" id="month8" /></label>
+        <label>Month 9: <input type="number" id="month9" /></label>
+        <label>Month 10: <input type="number" id="month10" /></label>
+        <label>Month 11: <input type="number" id="month11" /></label>
+        <label>Month 12: <input type="number" id="month12" /></label>
+    </div>
+    
+    <!-- Threshold input field -->
+    <div>
+        <p>Optional threshold (bars above = red, below = green):</p>
+        <label>Threshold: <input type="number" id="threshold" /></label>
+    </div>
+    
+    <!-- Generate button -->
+    <div>
+        <button id="generateBtn">Generate Diagram</button>
+    </div>
+    
     <script src="./src/index.ts" type="module"></script>
 </body>
 </html>
