@@ -6,9 +6,9 @@
  */
 
 // Constants for SVG dimensions and layout
-const AXIS_LENGTH = 1000;  // Length of both axes (easy to remember)
-const SEGMENT_WIDTH = 100;  // Width of each month segment (easy to remember)
-const Y_AXIS_HEIGHT = 500;  // Height available for bars (easy to remember)
+const AXIS_LENGTH = 1000;       // Length of both axes
+const SEGMENT_WIDTH = 100;      // Width of each month segment
+const Y_AXIS_HEIGHT = 500;      // Height available for bars
 const X_AXIS_Y_POSITION = 550;  // Y position of x-axis
 const Y_AXIS_X_POSITION = 100;  // X position of y-axis
 
@@ -63,6 +63,9 @@ function initializeDiagram(): void {
 function getMonthlyValues(): number[] {
     const values: number[] = [];
     for (let i = 1; i <= 12; i++) {
+        // Note how we are building the element ID using the loop index
+        // This is much easier than manually getting each input field by its ID
+        // The loop automatically constructs the correct ID for each month
         const input = document.getElementById(`month${i}`)! as HTMLInputElement;
         const value = input.value.trim();
         values.push(value === '' ? 0 : parseFloat(value));
