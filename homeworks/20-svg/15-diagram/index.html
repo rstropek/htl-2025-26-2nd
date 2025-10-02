@@ -3,10 +3,44 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Startercode</title>
+    <title>SVG Bar Diagram</title>
 </head>
 <body>
-    <h1 id="helloWorldHeader">Hello World</h1>
+    <h1>SVG Bar Diagram Generator</h1>
+    
+    <!-- SVG canvas with fixed size -->
+    <svg id="diagram" width="1200" height="600"></svg>
+    
+    <!-- Input fields for monthly values -->
+    <!-- We use label elements to associate text with input fields for accessibility -->
+    <!-- br elements create line breaks to display each month on a separate line for better readability -->
+    <div>
+        <h2>Enter values for each month (empty fields will be treated as 0):</h2>
+        <label>Month 1: <input type="number" id="month1" /></label><br/>
+        <label>Month 2: <input type="number" id="month2" /></label><br/>
+        <label>Month 3: <input type="number" id="month3" /></label><br/>
+        <label>Month 4: <input type="number" id="month4" /></label><br/>
+        <label>Month 5: <input type="number" id="month5" /></label><br/>
+        <label>Month 6: <input type="number" id="month6" /></label><br/>
+        <label>Month 7: <input type="number" id="month7" /></label><br/>
+        <label>Month 8: <input type="number" id="month8" /></label><br/>
+        <label>Month 9: <input type="number" id="month9" /></label><br/>
+        <label>Month 10: <input type="number" id="month10" /></label><br/>
+        <label>Month 11: <input type="number" id="month11" /></label><br/>
+        <label>Month 12: <input type="number" id="month12" /></label><br/>
+    </div>
+    
+    <!-- Threshold input field -->
+    <div>
+        <h2>Threshold for color coding (empty field will be treated as 0):</h2>
+        <label>Threshold (bars above = red, below or equal = green): <input type="number" id="threshold" /></label><br/>
+    </div>
+    
+    <!-- Generate button -->
+    <div>
+        <button id="generateBtn">Generate Diagram</button>
+    </div>
+    
     <script src="./src/index.ts" type="module"></script>
 </body>
 </html>
