@@ -13,12 +13,8 @@ const X_AXIS_Y_POSITION = 550;  // Y position of x-axis
 const Y_AXIS_X_POSITION = 100;  // X position of y-axis
 
 // Get references to DOM elements
-const svgElement = document.getElementById("diagram");
-if (!svgElement) {
-    throw new Error("SVG element not found");
-}
-const svg = svgElement as unknown as SVGSVGElement;
-const generateBtn = document.getElementById("generateBtn") as HTMLButtonElement;
+const svg = document.getElementById("diagram")! as unknown as SVGSVGElement;
+const generateBtn = document.getElementById("generateBtn")! as HTMLButtonElement;
 
 /**
  * Initialize the SVG with axes and divider lines
@@ -45,6 +41,8 @@ function initializeDiagram(): void {
     svg.appendChild(xAxis);
 
     // Create 12 divider lines on x-axis for the 12 months
+    // Using a loop here is much easier than manually creating 12 divider lines in HTML
+    // The loop automatically calculates the position of each divider
     for (let i = 1; i <= 12; i++) {
         const divider = document.createElementNS('http://www.w3.org/2000/svg', 'line');
         const xPosition = Y_AXIS_X_POSITION + (i * SEGMENT_WIDTH);
@@ -60,58 +58,72 @@ function initializeDiagram(): void {
 
 /**
  * Get all monthly values from input fields
- * @returns Array of values (null for empty fields)
+ * @returns Array of values (0 for empty fields)
  */
-function getMonthlyValues(): (number | null)[] {
-    const values: (number | null)[] = [];
+function getMonthlyValues(): number[] {
+    const values: number[] = [];
     for (let i = 1; i <= 12; i++) {
-        const input = document.getElementById(`month${i}`) as HTMLInputElement;
+        const input = document.getElementById(`month${i}`)! as HTMLInputElement;
         const value = input.value.trim();
-        values.push(value === '' ? null : parseFloat(value));
+        values.push(value === '' ? 0 : parseFloat(value));
     }
     return values;
 }
 
 /**
  * Get the threshold value from input field
- * @returns Threshold value or null if not set
+ * @returns Threshold value (0 if not set)
  */
-function getThreshold(): number | null {
-    const input = document.getElementById("threshold") as HTMLInputElement;
+function getThreshold(): number {
+    const input = document.getElementById("threshold")! as HTMLInputElement;
     const value = input.value.trim();
-    return value === '' ? null : parseFloat(value);
+    return value === '' ? 0 : parseFloat(value);
 }
 
 /**
- * Remove all existing bars from the diagram
+ * Remove all existing elements from the diagram
+ * This clears the entire SVG, including axes and bars
+ * The axes will be re-added when we reinitialize
  */
-function clearBars(): void {
-    const bars = svg.querySelectorAll('rect[data-bar]');
-    bars.forEach(bar => bar.remove());
+function clearDiagram(): void {
+    // Remove all children from SVG using a loop
+    while (svg.firstChild) {
+        svg.removeChild(svg.firstChild);
+    }
 }
 
 /**
  * Generate and display the bar diagram
  */
 function generateDiagram(): void {
-    // Clear any existing bars
-    clearBars();
+    // Clear the entire SVG and reinitialize with axes
+    clearDiagram();
+    initializeDiagram();
 
     // Get input values
     const values = getMonthlyValues();
     const threshold = getThreshold();
 
-    // Find the maximum value for percentage calculation
-    const validValues = values.filter(v => v !== null) as number[];
-    if (validValues.length === 0) {
-        return; // No values to display
+    // Find the maximum value for percentage calculation using a loop
+    let maxValue = 0;
+    for (let i = 0; i < values.length; i++) {
+        if (values[i]! > maxValue) {
+            maxValue = values[i]!;
+        }
     }
-    const maxValue = Math.max(...validValues);
 
-    // Create bars for each month
-    values.forEach((value, index) => {
-        if (value === null) {
-            return; // Skip empty months
+    // If all values are 0, don't draw any bars
+    if (maxValue === 0) {
+        return;
+    }
+
+    // Create bars for each month using a loop
+    for (let i = 0; i < values.length; i++) {
+        const value = values[i]!;
+        
+        // Skip months with value 0
+        if (value === 0) {
+            continue;
         }
 
         // Calculate bar height as percentage of max value
@@ -119,15 +131,12 @@ function generateDiagram(): void {
         const barHeight = heightPercentage * Y_AXIS_HEIGHT;
 
         // Calculate bar position
-        const barX = Y_AXIS_X_POSITION + (index * SEGMENT_WIDTH) + 10; // 10px padding
+        const barX = Y_AXIS_X_POSITION + (i * SEGMENT_WIDTH) + 10; // 10px padding
         const barY = X_AXIS_Y_POSITION - barHeight;
         const barWidth = SEGMENT_WIDTH - 20; // 20px total padding (10px on each side)
 
         // Determine bar color based on threshold
-        let barColor = 'green';
-        if (threshold !== null) {
-            barColor = value > threshold ? 'red' : 'green';
-        }
+        const barColor = value > threshold ? 'red' : 'green';
 
         // Create the bar
         const bar = document.createElementNS('http://www.w3.org/2000/svg', 'rect');
@@ -136,10 +145,9 @@ function generateDiagram(): void {
         bar.setAttribute('width', barWidth.toString());
         bar.setAttribute('height', barHeight.toString());
         bar.setAttribute('fill', barColor);
-        bar.setAttribute('data-bar', 'true'); // Mark as a bar for easy removal
         
         svg.appendChild(bar);
-    });
+    }
 }
 
 // Initialize the diagram with axes

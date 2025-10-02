@@ -13,11 +13,11 @@ Your bar diagram generator should:
 1. Display a fixed-size SVG canvas with x and y axes
 2. Show 12 segments on the x-axis representing months
 3. Allow users to enter up to 12 numerical values (one per month)
-4. Skip months where no value is entered
-5. Accept an optional threshold value for conditional coloring
+4. Treat empty input fields as 0 (zero) - no bar will be displayed for zero values
+5. Accept a threshold value for conditional coloring (empty threshold field = 0)
 6. Generate bars that are scaled relative to the maximum value (100%)
-7. Color bars green by default, or use red/green based on threshold
-8. Clear previous bars before generating new ones
+7. Color bars based on threshold: values above threshold = red, values at or below threshold = green
+8. Clear the entire SVG and reinitialize before generating new bars
 
 ### User Interface Design
 
@@ -36,12 +36,14 @@ Create a simple, clean interface with the following layout:
 |  |                                            |  |
 |  +--------------------------------------------+  |
 |                                                  |
-|  Enter values for each month (leave empty):     |
-|  Month 1: [  ]  Month 2: [  ]  ...              |
-|  Month 11: [  ]  Month 12: [  ]                 |
+|  Enter values for each month (empty = 0):       |
+|  Month 1: [  ]                                   |
+|  Month 2: [  ]                                   |
+|  ...                                             |
+|  Month 12: [  ]                                  |
 |                                                  |
-|  Optional threshold (bars above = red, below = green): |
-|  Threshold: [  ]                                 |
+|  Threshold for color coding (empty = 0):        |
+|  Threshold (above = red, below/equal = green): [  ] |
 |                                                  |
 |       [ Generate Diagram ]                       |
 +--------------------------------------------------+
@@ -51,12 +53,15 @@ Create a simple, clean interface with the following layout:
 
 #### HTML Structure
 
-- One SVG element with fixed dimensions (1200×600 pixels)
+- One SVG element with fixed dimensions (1200×600 pixels) without inline styles
 - 12 input fields (type="number") for monthly values
-- One input field for threshold value (optional)
+- One input field for threshold value
 - One button for generating the diagram
-- Appropriate descriptive text above input sections
-- Simple layout without complex CSS
+- Use h2 elements for section headings
+- Use label elements to associate text with input fields
+- Use br elements to separate input fields for better readability
+- Add HTML comments explaining the use of labels and br elements
+- Simple layout without CSS styling
 
 #### SVG Structure
 
@@ -70,19 +75,19 @@ Create a simple, clean interface with the following layout:
 
 Your TypeScript code must:
 
-- Get references to all DOM elements using `getElementById()`
+- Get references to all DOM elements using `getElementById()` with `!` to suppress null warnings
 - Add event listener to the generate button
 - Use `document.createElementNS()` to create SVG elements
 - Initialize the SVG with axes and divider lines on page load
-- Read values from all 12 input fields (handle empty fields)
-- Read the optional threshold value
-- Find the maximum value among all entered values
+- Use a loop to create divider lines (comment explaining why loops are easier than manual creation)
+- Read values from all 12 input fields (empty fields are treated as 0)
+- Read the threshold value (empty field is treated as 0)
+- Find the maximum value using a regular loop (not Math.max)
 - Calculate bar heights as percentages of the maximum value
-- Create rectangles (bars) for each non-empty month value
-- Apply color logic:
-  - If no threshold: all bars are green
-  - If threshold exists: bars above threshold are red, below are green
-- Remove all existing bars before generating new ones
+- Create rectangles (bars) for each non-zero month value using loops
+- Apply color logic: values above threshold = red, values at or below threshold = green
+- Clear the entire SVG by removing all children using a loop (not querySelectorAll)
+- Reinitialize axes after clearing
 - Use clear variable names and add code documentation
 
 #### Bar Properties
@@ -105,46 +110,48 @@ Your TypeScript code must:
 
 ### Scaling Algorithm
 
-1. Find the maximum value from all entered values
-2. For each value: `barHeight = (value / maxValue) × availableHeight`
-3. This ensures the tallest bar uses the full available height
+1. Find the maximum value from all entered values using a loop
+2. If maximum is 0, don't draw any bars
+3. For each non-zero value: `barHeight = (value / maxValue) × availableHeight`
+4. This ensures the tallest bar uses the full available height
 
 ### Color Logic
 
 ```
-IF threshold is not set:
-    color = green
+IF value > threshold:
+    color = red
 ELSE:
-    IF value > threshold:
-        color = red
-    ELSE:
-        color = green
+    color = green
 ```
+
+Note: Empty threshold field is treated as 0, so all positive values will be red by default.
 
 ## Testing Your Solution
 
 Test your implementation with these scenarios:
 
-1. **Basic test**: Enter values for all 12 months, no threshold
-   - All bars should be green
-   - The highest value should reach the top of the y-axis
-
-2. **Partial data**: Enter values for only some months (e.g., 1, 3, 5, 7)
-   - Only those months should show bars
-   - Other positions should remain empty
-
-3. **With threshold**: Enter values and set a threshold (e.g., 25)
+1. **Basic test**: Enter values for all 12 months with a threshold of 25
    - Values above 25 should be red
    - Values at or below 25 should be green
+   - The highest value should reach the top of the y-axis
+
+2. **Partial data**: Enter values for only some months (e.g., 1, 3, 5, 7), leave others empty
+   - Only months with non-zero values should show bars
+   - Empty months (treated as 0) should not display bars
+
+3. **Zero threshold**: Enter values and leave threshold empty (defaults to 0)
+   - All positive values should be red
+   - Only zero values should be green (no bars shown)
 
 4. **Regeneration**: Generate a diagram, then change values and regenerate
-   - Old bars should disappear
-   - New bars should appear with correct heights and colors
+   - Old bars and axes should be cleared
+   - New bars and axes should appear with correct heights and colors
 
 5. **Edge cases**: 
    - All values the same
-   - Only one value entered
+   - Only one value entered, rest empty
    - Very different values (e.g., 1 and 100)
+   - All values are 0 (no bars should appear)
 
 ## Bonus Challenges (Optional)
 
