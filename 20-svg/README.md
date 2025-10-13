@@ -67,7 +67,7 @@ First, let's see how to add shapes to an existing SVG canvas:
 
 ```typescript
 // Get reference to the existing SVG canvas
-const svg = document.getElementById('mySvg') as SVGSVGElement;
+const svg = document.getElementById('mySvg') as unknown as SVGSVGElement;
 
 // Create a circle
 const circle = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
@@ -111,7 +111,7 @@ Instead of setting styles directly with attributes, you can use CSS classes for 
 
 ```typescript
 // Get reference to the SVG canvas
-const svg = document.getElementById('styledSvg') as SVGSVGElement;
+const svg = document.getElementById('styledSvg') as unknown as SVGSVGElement;
 
 // Create a circle with CSS class
 const styledCircle = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
@@ -137,7 +137,7 @@ Let's make SVG elements interactive:
 ```typescript
 // HTML: <svg id="mySvg" width="400" height="300"></svg>
 
-const svg = document.getElementById('mySvg') as SVGSVGElement;
+const svg = document.getElementById('mySvg') as unknown as SVGSVGElement;
 
 // Create an interactive circle
 const interactiveCircle = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
@@ -174,7 +174,7 @@ Let's create a simple drawing application:
 // <svg id="drawingSvg" width="500" height="400" style="border: 1px solid #000;"></svg>
 // <button id="clearButton">Clear Drawing</button>
 
-const drawingSvg = document.getElementById('drawingSvg') as SVGSVGElement;
+const drawingSvg = document.getElementById('drawingSvg') as unknown as SVGSVGElement;
 const clearButton = document.getElementById('clearButton') as HTMLButtonElement;
 
 let isDrawing = false;
@@ -235,7 +235,7 @@ Let's create animated SVG elements:
 ```typescript
 // HTML: <svg id="animationSvg" width="600" height="200"></svg>
 
-const animationSvg = document.getElementById('animationSvg') as SVGSVGElement;
+const animationSvg = document.getElementById('animationSvg') as unknown as SVGSVGElement;
 
 // Create a moving circle
 const movingCircle = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
