@@ -4,7 +4,7 @@
 
 In this exercise you will create a weather dashboard using CSS to style different weather conditions, forecast cards, and alert messages. You will practice using selectors to target elements by ID, class, and tag name to create a visually appealing weather interface.
 
-![Weather Dashboard](./weather-dashboard.png)
+![Weather Dashboard](./20-weather-dashboard.png)
 
 ## Learning Goals
 
