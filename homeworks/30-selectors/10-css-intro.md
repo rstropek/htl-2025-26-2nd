@@ -248,3 +248,10 @@ headings.forEach((h) => {
 ```
 
 This makes headings highlight when you click them!
+
+## Step 11: You Turn!
+
+Take an article from [orf.at](https://www.orf.at/) (e.g. [this one](https://orf.at/stories/3408529/)). Create a website that mimics the article's layout and style.
+
+* Start with the text of the article. Format it with headings, paragraphs, lists, etc.
+* [Add images](https://www.w3schools.com/html/html_images.asp) from the article and style them.
