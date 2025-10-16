@@ -11,62 +11,6 @@ When a browser turns your HTML into the DOM tree you can pick out ("select") spe
 
 In this chapter we focus on the most common and simple selectors: by **ID**, **class**, and **tag name**. More powerful selectors (descendants, attributes, pseudo classes, etc.) come later.
 
-## The DOM as an Object-Oriented (Inheritance) Tree
-
-The DOM is not only a _tree of nodes_ in the page — it is also a _tree of TypeScript/JavaScript object types_.
-
-Very simplified inheritance chain (there are more layers, but this is enough now):
-
-```
-Node
-  └─ Element
-       └─ HTMLElement
-            ├─ HTMLParagraphElement (for <p>)
-            ├─ HTMLHeadingElement (for <h1>, <h2>, ...)
-            ├─ HTMLAnchorElement (for <a>)
-            ├─ HTMLDivElement (for <div>)
-            ├─ HTMLSpanElement (for <span>)
-            └─ ... many more specific element classes
-```
-
-Why does this matter? Methods like `document.querySelector()` only know you _asked for_ an element. They **do not know** which exact tag will be returned. Therefore the return type is the general `Element | null` (meaning "an Element or null if not found").
-
-However: once _you_ know (because of your HTML) that the element is, for example, a paragraph, you can _tell_ TypeScript the more specific type. This is called **type casting**.
-
-Two ways to cast:
-
-```typescript
-const introPara = document.querySelector(
-  "#intro"
-) as HTMLParagraphElement | null; // Meaning: could be null because it might not exist
-
-// Or do it in two steps for clarity:
-const maybeIntro = document.querySelector("#intro"); // Element | null
-if (maybeIntro) {
-  const intro = maybeIntro as HTMLParagraphElement; // Now we say: treat it as a paragraph
-  console.log(intro.textContent);
-}
-
-// If you are absolutely sure it exists AND that it is a paragraph, you can skip the null:
-const surelyExistsPara = document.querySelector(
-  "#intro"
-) as HTMLParagraphElement; // ⚠️ risky if the selector is wrong
-```
-
-### Type Narrowing vs Casting
-
-Sometimes TypeScript can _narrow_ the type for you without a cast, for example when you check `instanceof`:
-
-```typescript
-const el = document.querySelector("#intro"); // Element | null
-if (el instanceof HTMLParagraphElement) {
-  // Inside this block TypeScript now treats el as HTMLParagraphElement
-  console.log(el.textContent);
-}
-```
-
-Use casting (`as ...`) when you _know_ the specific type because you control the HTML. Use narrowing (`instanceof`) when you want to check at runtime.
-
 ## HTML Example
 
 We will use this HTML snippet for all examples below.
@@ -84,92 +28,9 @@ We will use this HTML snippet for all examples below.
 
 Think of each tag as a node in the DOM. IDs are unique (only one element has a given ID). Classes can repeat (many elements can share the same class name). Tag names are just the element names like `p`, `section`, `span`, `a`.
 
-## Selectors in TypeScript
-
-### Selecting an Object by ID
-
-Use `#` followed by the ID inside `querySelector()`. Because IDs are unique you either get `null` (not found) or one element.
-
-```typescript
-// Select the element with id="intro"
-// Return type: Element | null
-const introPara = document.querySelector("#intro");
-
-if (introPara) {
-  // null check first
-  // Tell TypeScript this is a paragraph element
-  const para = introPara as HTMLParagraphElement;
-  console.log("Intro text:", para.textContent);
-}
-```
-
-### Selecting Multiple Objects by Class
-
-Use `.` followed by the class name. `querySelectorAll()` returns a _NodeList_ of all matching elements. You can loop over it with `forEach`.
-
-```typescript
-// Select all elements with class="text"
-const textParagraphs = document.querySelectorAll(".text"); // NodeListOf<Element>
-
-textParagraphs.forEach((p) => {
-  // We *expect* <p> tags here, but could be something else with class="text"
-  const para = p as HTMLParagraphElement; // cast for clarity
-  console.log("Text paragraph:", para.textContent);
-});
-```
-
-### Selecting Multiple Objects by Tag Name
-
-Simply pass the tag name (for example `p`). Again you get all matches.
-
-```typescript
-// Select all paragraph elements
-const allParagraphs = document.querySelectorAll("p"); // NodeListOf<HTMLParagraphElement> (TypeScript can infer!)
-
-allParagraphs.forEach((p) => {
-  // Here inference already knows p is HTMLParagraphElement
-  console.log("Paragraph:", p.textContent);
-});
-```
-
-### Selecting an Object by ID and Class Together
-
-You can combine selectors. `#main-content.content` means: element with ID `main-content` **and** class `content`.
-
-```typescript
-// Element that has id="main-content" AND class="content"
-const mainSection = document.querySelector("#main-content.content"); // Element | null
-
-if (mainSection) {
-  const section = mainSection as HTMLElement;
-  console.log("Main section text (combined selector):", section.textContent);
-}
-```
-
-### Application Example: Add target to All Links
-
-We want **all** links (`<a>`) on the page to open in a new tab.
-
-```typescript
-// Select all anchor (link) elements
-const links = document.querySelectorAll("a"); // NodeListOf<HTMLAnchorElement>
-
-// Add target="_blank" to every link using for..of (simple and readable)
-for (const link of links) {
-  link.target = "_blank";
-}
-```
-
-**Explanation:**
-
-- `querySelectorAll('a')` returns a NodeList of all `<a>` elements
-- `for..of` loops directly over each element (clean syntax, no index needed)
-- `link.target = "_blank"` makes the browser open the link in a new tab
-- Shown alternatives: `forEach` and classic indexed `for`
-
 ## Selectors in CSS
 
-CSS uses the _same selector syntax_ but instead of reading or changing text content you define _rules_ (styles) that apply to all elements matching the selector.
+Let's first explore selectors in CSS. CSS uses selectors to target elements and apply styles. You write a selector, then define the style rules for all elements that match it.
 
 ### Referencing a CSS File in a Vite + TypeScript Project
 
@@ -200,7 +61,9 @@ Use `.highlight` to style every element that has the `highlight` class.
 }
 ```
 
-### Application Example: Styling External Links
+Try it: change the color of `#intro` and the background of all `.highlight` elements.
+
+### Styling External Links by Tag Name
 
 If you want to style _all_ links you can use the `a` selector:
 
@@ -210,6 +73,127 @@ a {
   color: green;
 }
 ```
+
+## Selectors in TypeScript
+
+In TypeScript, you use the same selector strings you just used in CSS, but instead of styling you read or change element properties.
+
+### Selecting an Object by ID
+
+Use `#` followed by the ID inside `querySelector()`. Because IDs are unique you either get `null` (not found) or one element.
+
+```typescript
+// Select the element with id="intro" and tell TypeScript it's a paragraph
+const introPara = document.querySelector("#intro") as HTMLParagraphElement | null;
+
+if (introPara) {
+  // null check first - always do this!
+  console.log("Intro text:", introPara.textContent);
+}
+```
+
+**Try it yourself:** Select `#intro`, change its text to "Hello!".
+
+### Selecting Multiple Objects by Class
+
+Use `.` followed by the class name. `querySelectorAll()` returns a _NodeList_ of all matching elements. You can loop over it with `forEach`.
+
+```typescript
+// Select all elements with class="text"
+const textParagraphs = document.querySelectorAll(".text"); // NodeListOf<Element>
+
+// Loop through each element using forEach
+textParagraphs.forEach((p) => {
+  const para = p as HTMLParagraphElement; // Tell TypeScript it's a paragraph
+  console.log("Text paragraph:", para.textContent);
+});
+```
+
+**Try it yourself:** Count how many `.text` elements exist and log the number using `textParagraphs.length`.
+
+### Selecting Multiple Objects by Tag Name
+
+Simply pass the tag name (for example `p`). Again you get all matches.
+
+```typescript
+// Select all paragraph elements
+const allParagraphs = document.querySelectorAll("p"); // NodeListOf<Element>
+
+allParagraphs.forEach((p) => {
+  const para = p as HTMLParagraphElement;
+  console.log("Paragraph:", para.textContent);
+});
+```
+
+**Try it yourself:** Select all `<a>` elements and underline them by setting `style.textDecoration = "underline"`.
+
+### Selecting an Object by ID and Class Together
+
+You can combine selectors. `#main-content.content` means: element with ID `main-content` **and** class `content`.
+
+```typescript
+// Element that has id="main-content" AND class="content"
+const mainSection = document.querySelector("#main-content.content") as HTMLElement | null;
+
+if (mainSection) {
+  console.log("Main section text (combined selector):", mainSection.textContent);
+}
+```
+
+**Important distinction:**
+- `#main-content.content` (no space) → Selects the element that has **both** `id="main-content"` **and** `class="content"`
+- `#main-content .content` (with space) → Selects elements with `class="content"` **inside** the element with `id="main-content"`
+
+Think of the space as meaning "inside" or "descendant of".
+
+### Add target to All Links
+
+We want **all** links (`<a>`) on the page to open in a new tab.
+
+```typescript
+// Select all anchor (link) elements
+const links = document.querySelectorAll("a"); // NodeListOf<Element>
+
+// Add target="_blank" to every link
+for (const link of links) {
+  const anchor = link as HTMLAnchorElement;
+  anchor.target = "_blank";
+}
+```
+
+**Explanation:**
+
+- `querySelectorAll('a')` returns a NodeList of all `<a>` elements
+- `for..of` loops directly over each element (clean syntax)
+- `link.target = "_blank"` makes the browser open the link in a new tab
+  
+**Pro tip (optional):** Also set `anchor.rel = "noopener noreferrer"` for security when opening external links.
+
+## Understanding Types in TypeScript
+
+When you select an element with `querySelector()`, TypeScript doesn't know what specific HTML element you found. It only knows you got back `Element | null` (meaning "an Element or null if not found").
+
+However, if you know what type of element it is (because you wrote the HTML), you can tell TypeScript using a **type assertion**:
+
+```typescript
+// Select the element and tell TypeScript it's a paragraph
+const introPara = document.querySelector("#intro") as HTMLParagraphElement | null;
+
+if (introPara) {
+  // Now we can safely use paragraph-specific properties
+  console.log(introPara.textContent);
+}
+```
+
+**Important:** Always check for `null` before using the element, because the selector might not find anything.
+
+**Tip:** You can find more information about types in MDN:
+
+* [`Element`](https://developer.mozilla.org/en-US/docs/Web/API/Element)
+* [`HTMLElement`](https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement)
+* [`HTMLParagraphElement`](https://developer.mozilla.org/en-US/docs/Web/API/HTMLParagraphElement)
+
+Note that `HTMLElement` is a special form of `Element`. `HTMLParagraphElement` is a special form of `HTMLElement`. This hierarchical relationship is called _Inheritance_.
 
 ## Summary of Basic Selector Forms
 
@@ -222,100 +206,18 @@ a {
 
 ## Good Practices
 
-1. **One unique ID per page**: do not reuse the same ID.
-2. **Use classes for styling** and repeated patterns. IDs are more for unique hooks (e.g. attaching events like `click` to a specific element).
-3. **Check for null** after using `querySelector()` before accessing properties.
-4. **Cast thoughtfully**: Only cast when you are sure about the element type; prefer natural inference when possible.
-5. **Keep selectors simple**. Only add complexity when needed.
-6. **Separate structure, style, logic**: HTML for structure, CSS for styling, TypeScript for behavior.
+1. **One unique ID per page**: Never reuse the same ID on multiple elements.
+2. **Use classes for styling**: IDs have higher CSS specificity and make overrides harder. Use classes for styling; keep IDs for unique JavaScript hooks.
+3. **Always check for null**: After using `querySelector()`, check if the element exists before using it.
+4. **Use type assertions**: Tell TypeScript what element type you have using `as HTMLParagraphElement` (or whatever element type you're selecting).
+5. **Keep selectors simple**: Only add complexity when needed.
+6. **Separate concerns**: HTML for structure, CSS for styling, TypeScript for behavior.
 
-## Advanced: `NodeList` vs. Array
+## Quick fixes when things go wrong
 
-⚠️ **This chapter contains advanced content that is not required for this course.** It has been added for those who want to go deeper.
+- **"Cannot read properties of null"**: Your selector matched nothing. Check the ID/class in HTML, or add a null check (`if (el) { ... }`).
+- **TypeScript error on properties** (e.g., `textContent`): Tell TypeScript what element you have with a type assertion (`as HTMLParagraphElement`).
 
-When you use `querySelectorAll()`, it returns a `NodeList`, not a regular JavaScript `Array`. While they look similar and share some methods, there are important differences you should understand.
+## Want to Learn More?
 
-### What is a NodeList?
-
-A `NodeList` is a collection of DOM nodes returned by methods like `querySelectorAll()`. It's **array-like** but not a true array.
-
-```typescript
-const paragraphs = document.querySelectorAll("p"); // NodeListOf<HTMLParagraphElement>
-console.log(paragraphs.length); // ✅ Works - has length property
-console.log(paragraphs[0]); // ✅ Works - can access by index
-```
-
-### What Works on NodeList
-
-`NodeList` supports these common operations:
-
-```typescript
-const items = document.querySelectorAll(".item");
-
-// ✅ forEach - works on NodeList
-items.forEach((item) => {
-  console.log(item.textContent);
-});
-
-// ✅ for..of - works on NodeList
-for (const item of items) {
-  console.log(item.textContent);
-}
-
-// ✅ Classic for loop - works on NodeList
-for (let i = 0; i < items.length; i++) {
-  console.log(items[i].textContent);
-}
-
-// ✅ Index access - works on NodeList
-const firstItem = items[0];
-
-// ✅ length property - works on NodeList
-console.log("Total items:", items.length);
-```
-
-### What Does NOT Work on NodeList
-
-Many useful array methods are **missing** from `NodeList`:
-
-```typescript
-const items = document.querySelectorAll(".item");
-
-// ❌ map - does NOT work on NodeList
-// const texts = items.map(item => item.textContent); // ERROR!
-
-// ❌ filter - does NOT work on NodeList
-// const visible = items.filter(item => item.style.display !== 'none'); // ERROR!
-
-// ❌ reduce - does NOT work on NodeList
-// const total = items.reduce((sum, item) => sum + 1, 0); // ERROR!
-
-// ❌ find - does NOT work on NodeList
-// const first = items.find(item => item.classList.contains('active')); // ERROR!
-
-// ❌ some/every - do NOT work on NodeList
-// const hasActive = items.some(item => item.classList.contains('active')); // ERROR!
-```
-
-### Converting NodeList to Array
-
-If you need array methods, convert the `NodeList` to a real array first:
-
-```typescript
-const items = document.querySelectorAll(".item");
-
-// Method 1: Array.from() (most readable)
-const itemsArray = Array.from(items);
-
-// Method 2: Spread operator (modern and concise)
-const itemsArray2 = [...items];
-
-// Now you can use all array methods:
-const texts = itemsArray.map((item) => item.textContent);
-const visible = itemsArray.filter((item) => item.style.display !== "none");
-const hasActive = itemsArray.some((item) => item.classList.contains("active"));
-```
-
-### Key Takeaway
-
-`NodeList` is great for simple loops (all we need in this course), but if you need powerful array methods, convert it first with `Array.from()` or the spread operator `[...]`.
+For those interested in going deeper, check out [Advanced: NodeList vs. Array](advanced_NodeList.md) to understand the differences between `NodeList` and regular JavaScript arrays, and when to convert between them.
