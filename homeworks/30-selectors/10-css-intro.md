@@ -75,7 +75,7 @@ import "./styles.css";
 
 ## Step 4: Basic Element Styling
 
-Add the following CSS rules to `styles.css` one by one. After each addition, run `npm run dev` and check the result in your browser.
+Add the following CSS rules to `styles.css` one by one. Keep `npm start` running. It will automatically reload the page when you save the file.
 
 ### Style the body (all text)
 
