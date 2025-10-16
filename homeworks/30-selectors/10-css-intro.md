@@ -28,19 +28,38 @@ Open `index.html` and replace the content inside the `<body>` tag with the follo
 ```html
 <h1><span class="highlight">My Blog</span> about CSS</h1>
 
-<p id="intro">This is the introduction paragraph. We will style this specially to make it stand out from the rest of the text.</p>
+<p id="intro">
+  This is the introduction paragraph. We will style this 
+  specially to make it stand out from the rest of the text.
+</p>
 
 <h2>Introduction</h2>
-<p>Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum.</p>
+<p>
+  Lorem ipsum dolor sit amet, consetetur sadipscing elitr, 
+  sed diam nonumy eirmod tempor invidunt ut labore et dolore 
+  magna aliquyam erat, sed diam voluptua. At vero eos et 
+  accusam et justo duo dolores et ea rebum.</p>
 
 <h2>Main Content</h2>
-<p>Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor.</p>
+<p>
+  Stet clita kasd gubergren, no sea takimata sanctus est 
+  Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, 
+  consetetur sadipscing elitr, sed diam nonumy eirmod tempor.
+</p>
 
 <h2>More Information</h2>
-<p>Visit <a href="https://www.w3schools.com/css/">W3Schools CSS Tutorial</a> to learn more about CSS. Duis autem vel eum iriure dolor in hendrerit in vulputate velit esse molestie consequat.</p>
+<p>
+  Visit <a href="https://www.w3schools.com/css/">W3Schools CSS Tutorial</a>
+  to learn more about CSS. Duis autem vel eum iriure dolor in hendrerit 
+  in vulputate velit esse molestie consequat.
+</p>
 
 <h2>Conclusion</h2>
-<p>Vel illum dolore eu feugiat nulla facilisis at vero eros et accumsan et iusto odio dignissim qui blandit praesent luptatum zzril delenit augue duis dolore te feugait nulla facilisi.</p>
+<p>
+  Vel illum dolore eu feugiat nulla facilisis at vero eros et 
+  accumsan et iusto odio dignissim qui blandit praesent luptatum 
+  zzril delenit augue duis dolore te feugait nulla facilisi.
+</p>
 ```
 
 **Tip:** You can use a [Lorem Ipsum generator](http://www.loremipsum.de/) to create placeholder text if you want to add more paragraphs.
@@ -173,7 +192,9 @@ Now let's add a sidebar with additional information. Add this HTML **before** th
 
 ```html
 <div class="sidebar">
-  Important Note: This is a practice exercise to learn CSS selectors and styling. Feel free to experiment with different colors, sizes, and layouts!
+  Important Note: This is a practice exercise to learn 
+  CSS selectors and styling. Feel free to experiment 
+  with different colors, sizes, and layouts!
 </div>
 ```
 
