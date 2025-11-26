@@ -1,0 +1,34 @@
+body {
+    display: flex;
+    justify-content: center;
+}
+
+#colored-rect {
+    padding: 1rem;
+    background-color: darkblue;
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 0.5rem;
+}
+
+.cell {
+    width: 35px;
+    height: 35px;
+    background-color: white;
+    border-radius: 50%;
+}
+
+.column-control {
+    color: white;
+    display: flex;
+    justify-content: center;
+    cursor: pointer;
+}
+
+.column-control:hover {
+    color: yellow;
+}
+
+.red {
+    background-color: red;
+}
