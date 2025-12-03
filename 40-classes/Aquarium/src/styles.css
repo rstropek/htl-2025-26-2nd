@@ -1,0 +1,33 @@
+body {
+    margin: 0;
+    padding: 0;
+    background-color: #001e36;
+    color: white;
+    font-family: sans-serif;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    min-height: 100vh;
+}
+
+header {
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+
+#aquarium {
+    width: 800px;
+    aspect-ratio: 16/9; 
+    background-image: url('../assets/background.png');
+    background-size: cover;
+    background-position: center;
+    position: relative;
+    overflow: hidden; /* No scrollbars if fish swim out */
+    border: 5px solid #333;
+    border-radius: 10px;
+}
+
+.fish {
+    position: absolute;
+    transform-origin: center; /* Transform origin is the center of the image */
+}
