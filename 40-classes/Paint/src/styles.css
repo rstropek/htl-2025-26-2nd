@@ -1,4 +1,3 @@
-/* Center content vertically and horizontally */
 body {
     display: flex;
     justify-content: center;
@@ -13,59 +12,77 @@ body {
     background-color: whitesmoke;
 }
 
-/* Put tool container and canvas side by side */
-.app-container {
+#app-container {
     margin-top: 15px;
     display: flex;
-    gap: 20px; /* Space between tool container and canvas */
+    gap: 20px;
 }
 
-/* Tool container (left side) */
-.tool-container {
+#tool-container {
     display: flex;
     flex-direction: column;
     gap: 10px;
     width: 150px;
     padding: 15px;
+
+    /*
+        ⚠️ Note something new: CSS nested rules
+
+        In new versions of CSS (supported by most modern browsers), you can nest rules inside other rules.
+        The following code is equivalent to writing: `#tool-container button { ... }`
+    */
+
+    button {
+        padding: 10px 15px;
+        background-color: white;
+        border: 1px solid lightgray;
+        border-radius: 4px;
+        cursor: pointer;
+
+        /*
+            ...aaaaand we nest again!
+            The following code is equivalent to writing: `#tool-container button:hover { ... }`
+        */
+
+        &:hover {
+            background-color: lightgray;
+        }
+
+        /*
+            ...aaaand again!
+            The following code is equivalent to writing: `#tool-container button.selected { ... }`
+        */
+
+        &.selected {
+            background-color: green;
+            color: white;
+            border-color: green;
+        }
+    }
 }
 
-/* Tool buttons */
-.tool-button {
-    padding: 10px 15px;
-    background-color: white;
-    border: 1px solid lightgray;
-    border-radius: 4px;
-    cursor: pointer;
-}
+#drawing-canvas {
+    Circle {
+        fill: blue;
+        stroke: darkblue;
+    }
 
-.tool-button:hover {
-    background-color: lightgray;
-}
-
-.tool-button.selected {
-    background-color: green;
-    color: white;
-    border-color: green;
-}
-
-/* Shape styles */
-.shape.temp {
-    opacity: 0.7;
-}
-
-.shape.temp circle, .shape.temp rect {
-    stroke: #000;
-    stroke-width: 2;
-    stroke-dasharray: 5, 5;
-    fill-opacity: 0.3;
-}
-
-.shape.selected circle, .shape.selected rect {
-    stroke: #ff0;
-    stroke-width: 3;
-    stroke-dasharray: none;
-}
-
-.shape.selected {
-    filter: drop-shadow(0 0 8px rgba(255, 255, 0, 0.7));
+    Rect {
+        fill: red;
+        stroke: darkred;
+    }
+    
+    .temp {
+        opacity: 0.7;
+        stroke: #000;
+        stroke-width: 2;
+        stroke-dasharray: 5, 5;
+        fill-opacity: 0.3;
+    }
+    
+    .selected {
+        stroke: gold;
+        stroke-width: 3;
+        stroke-dasharray: none;
+    }
 }

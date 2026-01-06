@@ -1,47 +1,32 @@
-import { ToolType } from './ToolType';
+import { Point } from './SharedTypes';
+
+// ⚠️ Repeat: Abstract base classes (discuss with teacher or research using AI assistant)
 
 export abstract class Shape {
-    protected svgElement: SVGGElement;
-    protected isSelected: boolean = false;
-    
-    constructor(protected svgContainer: SVGSVGElement) {
-        this.svgElement = document.createElementNS('http://www.w3.org/2000/svg', 'g');
-        this.svgElement.classList.add('shape');
-        svgContainer.appendChild(this.svgElement);
+  constructor(protected svgContainer: SVGSVGElement) {}
+
+  public abstract containsPoint(p: Point): boolean;
+  public abstract updatePosition(start: Point, end: Point): void;
+  public abstract get hasZeroArea(): boolean;
+  public abstract get element(): SVGElement;
+
+  public select(): void {
+    this.element.classList.add('selected');
+  }
+
+  public deselect(): void {
+    this.element.classList.remove('selected');
+  }
+
+  public set tempMode(isTemp: boolean) {
+    if (isTemp) {
+      this.element.classList.add('temp');
+    } else {
+      this.element.classList.remove('temp');
     }
-    
-    public abstract containsPoint(x: number, y: number): boolean;
-    public abstract updatePosition(startX: number, startY: number, endX: number, endY: number): void;
-    
-    public get element(): SVGGElement {
-        return this.svgElement;
-    }
-    
-    public select(): void {
-        this.isSelected = true;
-        this.svgElement.classList.add('selected');
-    }
-    
-    public deselect(): void {
-        this.isSelected = false;
-        this.svgElement.classList.remove('selected');
-    }
-    
-    public isSelectedShape(): boolean {
-        return this.isSelected;
-    }
-    
-    public setTempMode(isTemp: boolean): void {
-        if (isTemp) {
-            this.svgElement.classList.add('temp');
-        } else {
-            this.svgElement.classList.remove('temp');
-        }
-    }
-    
-    public remove(): void {
-        this.svgContainer.removeChild(this.svgElement);
-    }
-    
-    public abstract getType(): ToolType;
+  }
+
+  public remove(): void {
+    this.svgContainer.removeChild(this.element);
+  }
 }

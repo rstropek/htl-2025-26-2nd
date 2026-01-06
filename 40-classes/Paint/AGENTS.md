@@ -4,7 +4,7 @@
 
 This is a learning app for computer science students who practise OOP with TypeScript. Do NOT use and additional frameworks beside what is already installed in package.json.
 
-Whenever you make changes to the code, adjust AGENTS.md to reflect the current state of the project. Only add information that is relevant for understanding the code structure and design decisions. Do not document simple and obvious things in AGENTS.md.
+Whenever you make changes to the code, adjust AGENTS.md to reflect the current state of the project. Only add information that is relevant for understanding the code structure and design decisions. Do not document simple and obvious things in AGENTS.md. When you make changes to AGENTS.md, always document the current state (e.g. "The shape class has a protected member...") rather than the changes you made (e.g. "The shape class has been refactored so that...").
 
 ## Tooling
 
@@ -34,6 +34,8 @@ The application follows a clean OOP architecture with the following class hierar
   - `Rect` - src/Rect.ts
 * `ShapeManager` - src/ShapeManager.ts (manages shape creation and interaction)
 * `ToolSelection` - src/ToolSelection.ts (tool management with callback support)
+
+The `Shape` class has an abstract `element` getter that concrete shape classes implement.
 
 ## Features Implemented
 
