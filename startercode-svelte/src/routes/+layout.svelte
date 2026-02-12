@@ -17,6 +17,7 @@
 <nav class="main-nav">
 	<a href="/calculator">Calculator</a>
 	<a href="/todo">Todo List</a>
+	<a href="/counter">Counter</a>
 </nav>
 
 <!-- Render the page content of the current route -->
