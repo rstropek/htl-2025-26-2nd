@@ -18,6 +18,7 @@
 	<a href="/calculator">Calculator</a>
 	<a href="/todo">Todo List</a>
 	<a href="/counter">Counter</a>
+	<a href="/stopwatch">Stopwatch</a>
 </nav>
 
 <!-- Render the page content of the current route -->

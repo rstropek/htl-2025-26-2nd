@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Friendship Bracelet Editor</title>
+</head>
+<body>
+    <h1>Friendship Bracelet Editor</h1>
+
+    <!-- Preview area: shows the bracelet with a decorative border and background -->
+    <div id="preview">
+        <!-- Container where bracelet items (letter cubes & spacer beads) are rendered by TypeScript -->
+        <div id="bracelet"></div>
+    </div>
+
+    <!-- All interactive controls are grouped here -->
+    <div id="controls">
+        <!-- Letter/symbol buttons – filled dynamically by buildLetterGrid() in index.ts -->
+        <div class="control-section">
+            <div id="letterGrid" class="grid"></div>
+        </div>
+
+        <!-- Color buttons for spacer beads – filled dynamically by buildColorGrid() in index.ts -->
+        <div class="control-section">
+            <div id="colorGrid" class="color-row"></div>
+        </div>
+
+        <!-- Undo button – removes the last item from the bracelet -->
+        <div class="control-section">
+            <button id="undoBtn" class="undo-btn">Remove&nbsp;last</button>
+        </div>
+    </div>
+
+    <!-- Error/warning messages are displayed here by the Bracelet class -->
+    <div id="error"></div>
+
+    <script src="./src/index.ts" type="module"></script>
+</body>
+</html>
