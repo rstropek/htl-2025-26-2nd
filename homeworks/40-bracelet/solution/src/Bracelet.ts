@@ -104,8 +104,9 @@ export class Bracelet {
     }
 
     private checkMixedColors(): void {
-        if (this.mixedColorWarningShown) return;
-        const spacers = this.items.filter((item): item is SpacerItem => item instanceof SpacerItem);
+        if (this.mixedColorWarningShown) { return; }
+
+        const spacers = this.items.filter(item => item instanceof SpacerItem);
         if (spacers.length >= 2) {
             const colors = new Set(spacers.map(s => s.color));
             if (colors.size > 1) {
