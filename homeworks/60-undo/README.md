@@ -93,7 +93,7 @@ Internal requirements:
   1. Create the appropriate `Command` subclass instance.
   2. Call `execute(currentValue)` and store the new value.
   3. `push` the command onto the undo stack.
-  4. Re-render the UI (value + history list).
+  4. Re-render the UI (value).
 * **Undo** click handler:
   1. `pop` the top command. If `null`, do nothing.
   2. Call `undo(currentValue)` on it and store the new value.
