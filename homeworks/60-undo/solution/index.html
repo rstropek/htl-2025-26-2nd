@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Counter with Undo</title>
+</head>
+<body>
+    <h1>Counter with Undo</h1>
+
+    <div id="value-box">
+        Current value: <span id="value-display">0</span>
+    </div>
+
+    <section>
+        <h2>Operation</h2>
+        <label>Δ: <input id="delta-input" type="number" min="1" step="1" placeholder="positive integer" /></label>
+        <button id="add-btn">Add</button>
+        <button id="subtract-btn">Subtract</button>
+        <p id="error-msg"></p>
+    </section>
+
+    <section>
+        <h2>Undo</h2>
+        <button id="undo-btn" disabled>Undo</button>
+    </section>
+
+    <script src="./src/index.ts" type="module"></script>
+</body>
+</html>
