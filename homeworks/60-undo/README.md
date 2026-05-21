@@ -54,7 +54,6 @@ An abstract class that represents *any* reversible operation on a counter.
 abstract class Command {
   abstract execute(currentValue: number): number;
   abstract undo(currentValue: number): number;
-  abstract describe(): string;   // e.g. "+ 3" or "- 2", used for the history view
 }
 ```
 
